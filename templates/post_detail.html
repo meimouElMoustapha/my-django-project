@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+{% load  static %}
+
+{% block content%}
+
+
+ <br><br>
+<div class="container">
+ 
+
+<h1>{{ object.title }}</h1>
+<p>{{ object.content }}</p>
+<p>{{ object.FILE }}</p>
+<p>{{ object.created }}</p>
+
+
+{% if object.FILE %}
+  <img src="{{ object.FILE.url }}" class="img-thumbnail" alt="{{ object.title }}">
+{% endif %}
+
+{% if request.user == post.author %}
+
+<br><br>
+<a  type="button" class="btn btn-secondary"  href="{% url 'post_update' object.pk %}">تعديل المنشور</a> |
+<a type="button" class="btn btn-secondary"  href="{% url 'post_delete' object.pk %}">حدف المنسور</a> |
+
+
+{% endif %}
+
+ <br>
+<br>
+<br>
+  <a type="button" class="btn btn-success" href="{% url 'post_list' %}">الرجوع</a>
+
+</div>
+{%endblock %}

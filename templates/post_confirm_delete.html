@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load  static %}
+
+{% block content%}
+
+
+
+ <br><br>
+<div class="container">
+
+<h1>حدف "{{ object.title }}"?</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <button  class="btn btn-secondary" type="submit">نعم, حدف</button>
+</form>
+<br>
+<a  class="btn btn-secondary" href="{% url 'post_detail' object.pk %}">الغاء</a>
+
+
+</div>
+{% endblock %}
