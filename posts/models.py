@@ -8,6 +8,8 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     FILE=models.ImageField(upload_to='product_images/')
+    
+
     created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     

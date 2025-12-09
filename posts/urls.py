@@ -10,8 +10,8 @@ from . views import AboutUsView
 
 urlpatterns = [
     
-    path("login/", views.login_view, name="login"),
-    path("register/", views.register_view, name="register"),
+    path("accounts/login/", views.login_view, name="login"),
+    path("accounts/signup/", views.register_view, name="register"),
     path('about/', AboutUsView.as_view(), name='about'),
     path("logout/", views.logout_view, name="logout"),
     path('', PostListView.as_view(), name='post_list'),

@@ -11,12 +11,13 @@ from django.contrib.auth import authenticate, login,logout
 from .forms import RegisterForm
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import TemplateView
+ 
 
 
 
 
 
-class AboutUsView(TemplateView):
+class AboutUsView(LoginRequiredMixin,TemplateView):
     template_name = "about.html"
 
 
@@ -57,7 +58,7 @@ def register_view(request):
 
     return render(request, "register.html", {"form": form})
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin,ListView):
     model = Post
     template_name = 'post_list.html'
     context_object_name = 'posts'   # optional
@@ -65,11 +66,11 @@ class PostListView(ListView):
 
     
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
     template_name = 'post_detail.html'
 
-class PostCreateView(SuccessMessageMixin,CreateView):
+class PostCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     model = Post
     fields = ['title', 'content','FILE']
     template_name = 'post_form.html'
@@ -79,7 +80,7 @@ class PostCreateView(SuccessMessageMixin,CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class PostUpdateView(UserPassesTestMixin,UpdateView):
+class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Post
     fields = ['title', 'content','FILE']
     template_name = 'post_form.html'
@@ -89,7 +90,7 @@ class PostUpdateView(UserPassesTestMixin,UpdateView):
         post = self.get_object()
         return self.request.user == post.author  # only author can edit
 
-class PostDeleteView(UserPassesTestMixin,DeleteView):
+class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     model = Post
     template_name = 'post_confirm_delete.html'
     success_url = reverse_lazy('post_list')
